@@ -173,9 +173,14 @@ Respond naturally and conversationally.`;
     }
 
     // Extract name (simplified - looks for "name is X" or "this is X")
-    const nameMatch = input.match(/(?:name is|this is|i'm|i am)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/i);
+    const nameMatch = input.match(/(?:name is|this is|i'm|i am)\s+([a-z][a-z\s]+)/i);
     if (nameMatch) {
-      context.currentReservation.name = nameMatch[1];
+      // Capitalize first letter of each word for proper name formatting
+      const name = nameMatch[1].trim();
+      context.currentReservation.name = name
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
     }
   }
 
@@ -200,6 +205,19 @@ Respond naturally and conversationally.`;
     const res = context.currentReservation!;
     
     try {
+      // Check availability before creating reservation
+      const isAvailable = this.reservationService.checkAvailability(
+        res.date!,
+        res.time!,
+        res.partySize!
+      );
+
+      if (!isAvailable) {
+        console.log('No availability for requested time');
+        // Availability issue will be handled in conversation flow
+        return;
+      }
+
       const reservation = this.reservationService.createReservation({
         name: res.name!,
         phoneNumber: context.phoneNumber,

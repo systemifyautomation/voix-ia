@@ -26,9 +26,8 @@ export class TwilioService {
   async handleIncomingCall(_from: string, _callSid: string): Promise<string> {
     const twiml = new VoiceResponse();
 
-    const greeting = `Hello! Thank you for calling ${process.env.BUSINESS_NAME || 'our restaurant'}. 
-I'm your AI receptionist. I can help you make, modify, or cancel a reservation. 
-How can I assist you today?`;
+    const businessName = process.env.BUSINESS_NAME || 'our restaurant';
+    const greeting = `Hello! Thank you for calling ${businessName}. I'm your AI receptionist. I can help you make, modify, or cancel a reservation. How can I assist you today?`;
 
     twiml.say(
       {

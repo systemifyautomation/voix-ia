@@ -25,7 +25,7 @@ export function validateDate(date: string): boolean {
   }
 
   const dateObj = new Date(date);
-  return dateObj instanceof Date && !isNaN(dateObj.getTime());
+  return !isNaN(dateObj.getTime());
 }
 
 /**
