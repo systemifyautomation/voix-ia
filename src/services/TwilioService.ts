@@ -23,7 +23,7 @@ export class TwilioService {
   /**
    * Handle incoming voice call
    */
-  async handleIncomingCall(from: string, callSid: string): Promise<string> {
+  async handleIncomingCall(_from: string, _callSid: string): Promise<string> {
     const twiml = new VoiceResponse();
 
     const greeting = `Hello! Thank you for calling ${process.env.BUSINESS_NAME || 'our restaurant'}. 

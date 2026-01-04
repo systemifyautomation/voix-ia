@@ -12,11 +12,11 @@ dotenv.config();
 
 class App {
   public app: Express;
-  private reservationService: ReservationService;
-  private aiService: AIService;
-  private twilioService: TwilioService;
-  private voiceController: VoiceController;
-  private reservationController: ReservationController;
+  private reservationService!: ReservationService;
+  private aiService!: AIService;
+  private twilioService!: TwilioService;
+  private voiceController!: VoiceController;
+  private reservationController!: ReservationController;
 
   constructor() {
     this.app = express();

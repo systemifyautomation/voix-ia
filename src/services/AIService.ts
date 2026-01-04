@@ -122,7 +122,7 @@ Respond naturally and conversationally.`;
   private async processReservationIntent(
     context: ConversationContext,
     userInput: string,
-    assistantResponse: string
+    _assistantResponse: string
   ): Promise<void> {
     const lowerInput = userInput.toLowerCase();
 
