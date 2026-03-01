@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  voix-ia:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=${PORT:-3000}
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4}
+      - BUSINESS_NAME=${BUSINESS_NAME:-Our Restaurant}
+      - BUSINESS_HOURS=${BUSINESS_HOURS:-9:00 AM - 10:00 PM}
+      - MAX_PARTY_SIZE=${MAX_PARTY_SIZE:-20}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
